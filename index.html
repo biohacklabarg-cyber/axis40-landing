@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXIS40®</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+body{
+margin:0;
+overflow-x:hidden;
+background:#000;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+section{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+opacity:0;
+}
+
+h1{
+font-size:60px;
+letter-spacing:3px;
+}
+
+.button{
+margin-top:30px;
+padding:15px 40px;
+border:1px solid #fff;
+background:transparent;
+color:#fff;
+text-decoration:none;
+transition:.4s;
+}
+
+.button:hover{
+background:#fff;
+color:#000;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<section>
+<h1>AXIS40®</h1>
+<p>Rendimiento físico como activo estratégico.</p>
+<a id="applyBtn" class="button">APLICAR</a>
+</section>
+
+<script>
+
+/* ANIMACIÓN APPLE STYLE */
+gsap.to("section",{
+opacity:1,
+duration:1.5,
+ease:"power3.out"
+});
+
+/* WEBGL MINIMALISTA */
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({canvas:document.getElementById('bg'), alpha:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const geometry = new THREE.IcosahedronGeometry(2,1);
+const material = new THREE.MeshBasicMaterial({color:0xffffff, wireframe:true});
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+camera.position.z = 5;
+
+function animate(){
+requestAnimationFrame(animate);
+sphere.rotation.x += 0.002;
+sphere.rotation.y += 0.002;
+renderer.render(scene,camera);
+}
+animate();
+
+</script>
+</body>
+</html>
